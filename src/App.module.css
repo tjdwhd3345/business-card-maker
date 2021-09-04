@@ -1,5 +1,9 @@
 .App {
   text-align: center;
-  vertical-align: middle;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #8f8f8f;
+  align-items: center;
 }
