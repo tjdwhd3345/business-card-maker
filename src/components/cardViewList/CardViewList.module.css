@@ -1,0 +1,25 @@
+.card {
+  display: flex;
+  border: 1px solid;
+}
+
+.image {
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.company::before {
+  content: '';
+  position: relative;
+  top: 23px;
+  display: block;
+  border: 1px solid #eacb10;
+}

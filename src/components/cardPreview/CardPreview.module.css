@@ -1,0 +1,12 @@
+.wrap {
+  width: 50%;
+}
+
+.list {
+  list-style: none;
+  padding: 30px 60px;
+}
+
+.list > li {
+  margin: 10px 0;
+}

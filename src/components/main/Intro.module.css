@@ -19,7 +19,7 @@
 .title div:nth-child(1) {
   flex: 1 1 0;
 }
-.title h2 {
+.title h1 {
   padding-left: 4.4rem;
 }
 
@@ -43,7 +43,7 @@
   background-color: #f3f3f3;
   justify-content: space-around;
 }
-.content h2 {
+.content h1 {
   margin: 15px 0;
 }
 
