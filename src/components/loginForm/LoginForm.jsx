@@ -1,27 +1,32 @@
 import React from 'react';
+import styles from './LoginForm.module.css';
 import { useHistory } from 'react-router-dom';
+// import { GoogleAuthProvider } from 'firebase/auth';
 
 const LoginForm = ({ auth, signInWithGoogle }) => {
   let history = useHistory();
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      const { displayName, email, emailVerified } = user;
-      console.log(displayName, email, emailVerified);
-      if (emailVerified) history.push('/main');
-    }
-  });
-  
+  const handleClick = () => {
+    signInWithGoogle().then((result) => {
+      console.log('signInWithGoogle.then', result);
+      if (result.user) {
+        const { displayName, email, emailVerified } = result.user;
+        console.log(displayName, email, emailVerified, result.user);
+        if (emailVerified) history.push('/main');
+      }
+    });
+  };
+
   return (
     <>
-      <section>
-        <h2>Business Card Maker</h2>
-        <div>
+      <section className={styles.loginForm}>
+        <h2 className={styles.title}>Business Card Maker</h2>
+        <div className={styles.content}>
           <h2>Login</h2>
-          <button onClick={signInWithGoogle}>Google</button>
+          <button onClick={handleClick}>Google</button>
           <button>Github</button>
         </div>
-        <div>Code your dream</div>
+        <div className={styles.footer}>Code your dream</div>
       </section>
     </>
   );

@@ -1,0 +1,44 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  min-width: 20vw;
+  cursor: default;
+}
+
+.title,
+.footer {
+  /* background-color: #204938; */
+  background-color: #00539c;
+  color: #f3f3f3;
+  padding: 10px 0;
+}
+.title {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f3f3;
+}
+.content h2 {
+  margin: 15px 0;
+}
+
+.content button {
+  border-radius: 25px;
+  margin: 0 20px;
+  margin-bottom: 5px;
+  height: 2rem;
+  cursor: pointer;
+}
+.content button:nth-child(2n + 1) {
+  border-radius: 25px;
+  margin-bottom: 15px;
+}
+
+.footer {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
