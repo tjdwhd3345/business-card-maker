@@ -11,7 +11,7 @@ const CardViewList = ({ info }) => {
         <span className={styles.company}>{company}</span>
         <span className={styles.position}>{position}</span>
         <span className={styles.email}>{email}</span>
-        <span className={styles.message}>{message}</span>
+        <span className={styles.message}>"{message}"</span>
       </div>
     </div>
   );

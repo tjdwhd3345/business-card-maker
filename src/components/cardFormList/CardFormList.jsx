@@ -6,9 +6,9 @@ const CardFormList = ({ info }) => {
   return (
     <div className={`${styles.content}`}>
       <div>
-        <input type='text' id='name' placeholder='Name' value={name} />
-        <input type='text' id='company' placeholder='Company' value={company} />
-        <select name='theme' id='theme'>
+        <input type='text' placeholder='Name' value={name} />
+        <input type='text' placeholder='Company' value={company} />
+        <select name='theme'>
           <option value='Light' selected>
             Light
           </option>
@@ -17,24 +17,12 @@ const CardFormList = ({ info }) => {
         </select>
       </div>
       <div>
-        <input
-          type='text'
-          id='position'
-          placeholder='Position'
-          value={position}
-        />
-        <input
-          type='email'
-          name='email'
-          id='email'
-          placeholder='Email'
-          value={email}
-        />
+        <input type='text' placeholder='Position' value={position} />
+        <input type='email' name='email' placeholder='Email' value={email} />
       </div>
       <div>
         <textarea
           name='message'
-          id='message'
           rows='2'
           placeholder='Message'
           value={message}

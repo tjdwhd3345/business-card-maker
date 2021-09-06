@@ -23,3 +23,7 @@
   display: block;
   border: 1px solid #eacb10;
 }
+
+.message {
+  font-family: 'Courier New', Courier, monospace;
+}
