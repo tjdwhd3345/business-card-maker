@@ -3,8 +3,9 @@ import styles from './Intro.module.css';
 import { useHistory } from 'react-router-dom';
 import CardMaker from '../cardMaker/CardMaker';
 import CardPreview from '../cardPreview/CardPreview';
+import { child, get, ref, set } from 'firebase/database';
 
-const Intro = ({ auth }) => {
+const Intro = ({ auth, db }) => {
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
   const [cards, setCards] = useState([
     {
@@ -12,7 +13,7 @@ const Intro = ({ auth }) => {
       company: 'Kakao',
       theme: 'Light',
       position: 'Software Engineer',
-      email: 'tjdwhd3345@naver.com',
+      email: 'msj@naver.com',
       message: 'mocci mocci.',
     },
     {
@@ -20,7 +21,7 @@ const Intro = ({ auth }) => {
       company: 'Standard',
       theme: 'Light',
       position: 'Dental Hygienist',
-      email: 'lsa0435@naver.com',
+      email: 'lsa@naver.com',
       message: 'im seung ae.',
     },
   ]);
@@ -30,6 +31,30 @@ const Intro = ({ auth }) => {
     auth.signOut().then(() => {
       history.push('/');
     });
+  };
+
+  const handleTest = () => {
+    /* const cardsRef = ref(db, 'cards/');
+    set(cardsRef, {
+      name: 'Mo Sung Jong',
+      company: 'Kakao',
+      theme: 'Light',
+      position: 'Software Engineer',
+      email: 'msj@naver.com',
+      message: 'mocci mocci.',
+    }); */
+    const dbRef = ref(db);
+    get(child(dbRef, 'cards/'))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+        } else {
+          console.log('No data available');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   useEffect(() => {
@@ -54,7 +79,9 @@ const Intro = ({ auth }) => {
           <CardMaker cards={cards} />
           <CardPreview cards={cards} />
         </div>
-        <div className={styles.footer}>Code your dream</div>
+        <div onClick={handleTest} className={styles.footer}>
+          Code your dream
+        </div>
       </section>
     </>
   );

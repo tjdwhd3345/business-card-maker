@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import styles from './App.module.css';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import { auth, signInWithGoogle } from './firebaseInit/firebaseInit';
+import { auth, signInWithGoogle, db } from './firebaseInit/firebaseInit';
 import LoginForm from './components/loginForm/LoginForm';
 import Intro from './components/main/Intro';
 import React from 'react';
@@ -15,7 +15,7 @@ const App = () => {
             <LoginForm auth={auth} signInWithGoogle={signInWithGoogle} />
           </Route>
           <Route path='/main' exact>
-            <Intro auth={auth} />
+            <Intro auth={auth} db={db} />
           </Route>
         </Switch>
       </BrowserRouter>
