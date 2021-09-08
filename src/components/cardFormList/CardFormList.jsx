@@ -1,13 +1,27 @@
 import React from 'react';
 import styles from './CardFormList.module.css';
 
-const CardFormList = ({ info }) => {
+const CardFormList = ({ info,handleChange }) => {
   const { name, company, theme, position, email, message } = info;
+  
+  console.log('info', info);
+
   return (
     <div className={`${styles.content}`}>
       <div>
-        <input type='text' placeholder='Name' value={name} />
-        <input type='text' placeholder='Company' value={company} />
+        <input
+          type='text'
+          placeholder='Name'
+          value={name}
+          name='name'
+          onChange={handleChange}
+        />
+        <input
+          type='text'
+          placeholder='Company'
+          value={company}
+          name='company'
+        />
         <select name='theme'>
           <option value='Light' selected>
             Light
@@ -17,8 +31,13 @@ const CardFormList = ({ info }) => {
         </select>
       </div>
       <div>
-        <input type='text' placeholder='Position' value={position} />
-        <input type='email' name='email' placeholder='Email' value={email} />
+        <input
+          type='text'
+          placeholder='Position'
+          value={position}
+          name='position'
+        />
+        <input type='email' placeholder='Email' value={email} name='email' />
       </div>
       <div>
         <textarea

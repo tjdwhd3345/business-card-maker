@@ -8,15 +8,11 @@ const CardPreview = ({ cards }) => {
       <div className={styles.title}>
         <h2>Card Preview</h2>
         <ul className={styles.list}>
-          {cards.map((card) => {
-            return (
-              <>
-                <li>
-                  <CardViewList info={card} />
-                </li>
-              </>
-            );
-          })}
+          {cards.map((card) => (
+            <li>
+              <CardViewList info={card} />
+            </li>
+          ))}
         </ul>
       </div>
     </div>
