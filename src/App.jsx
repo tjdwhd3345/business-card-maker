@@ -12,7 +12,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route path={['/', '/login']} exact>
-            <LoginForm auth={auth} signInWithGoogle={signInWithGoogle} />
+            <LoginForm signInWithGoogle={signInWithGoogle} />
           </Route>
           <Route path='/main' exact>
             <Intro auth={auth} db={db} />

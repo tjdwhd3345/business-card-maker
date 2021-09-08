@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './LoginForm.module.css';
 import { useHistory } from 'react-router-dom';
-// import { GoogleAuthProvider } from 'firebase/auth';
 
-const LoginForm = ({ auth, signInWithGoogle }) => {
+const LoginForm = ({ signInWithGoogle }) => {
   let history = useHistory();
 
   const handleClick = () => {
