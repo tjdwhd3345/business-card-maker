@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './CardFormList.module.css';
 
-const CardFormList = ({ info,handleChange }) => {
-  const { name, company, theme, position, email, message } = info;
-  
-  console.log('info', info);
+const CardFormList = ({ info, handleChange }) => {
+  const [cardInfo, setCardInfo] = useState(info);
+
+  console.log('info', cardInfo);
+
+  /**
+   * 키 이벤트와 현재 카드 키값을 상위로 전달.
+   * @param {e} e : 키보드 이벤트
+   */
+  const handleInputChange = (e) => {
+    setCardInfo({
+      ...cardInfo,
+      [e.target.name]: e.target.value,
+    });
+    handleChange(e, cardInfo.key);
+  };
 
   return (
     <div className={`${styles.content}`}>
@@ -12,15 +24,16 @@ const CardFormList = ({ info,handleChange }) => {
         <input
           type='text'
           placeholder='Name'
-          value={name}
+          value={cardInfo.name}
           name='name'
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
         <input
           type='text'
           placeholder='Company'
-          value={company}
+          value={cardInfo.company}
           name='company'
+          onChange={handleInputChange}
         />
         <select name='theme'>
           <option value='Light' selected>
@@ -34,17 +47,25 @@ const CardFormList = ({ info,handleChange }) => {
         <input
           type='text'
           placeholder='Position'
-          value={position}
+          value={cardInfo.position}
           name='position'
+          onChange={handleChange}
         />
-        <input type='email' placeholder='Email' value={email} name='email' />
+        <input
+          type='email'
+          placeholder='Email'
+          value={cardInfo.email}
+          name='email'
+          onChange={handleChange}
+        />
       </div>
       <div>
         <textarea
           name='message'
           rows='2'
           placeholder='Message'
-          value={message}
+          value={cardInfo.message}
+          onChange={handleChange}
         ></textarea>
       </div>
       <div>
