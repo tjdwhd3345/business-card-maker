@@ -10,9 +10,11 @@ const CardMaker = ({ cards, handleChange }) => {
       </div>
       <ul className={styles.list}>
         {cards.map((card) => (
-          <li>
-            <CardFormList key={card} info={card} handleChange={handleChange} />
-          </li>
+          <CardFormList
+            key={card.key}
+            info={card}
+            handleChange={handleChange}
+          />
         ))}
       </ul>
     </div>

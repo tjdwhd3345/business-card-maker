@@ -1,29 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './CardFormList.module.css';
 
-const CardFormList = ({ info,handleChange }) => {
-  const { name, company, theme, position, email, message } = info;
-  
-  console.log('info', info);
+const CardFormList = ({ info, handleChange }) => {
+  /**
+   * 키 이벤트와 현재 카드 키값을 상위로 전달.
+   * @param {e} e : 키보드 이벤트
+   */
+  const handleInputChange = (e) => {
+    handleChange(e, info.key);
+  };
 
   return (
-    <div className={`${styles.content}`}>
+    <li>
       <div>
         <input
           type='text'
           placeholder='Name'
-          value={name}
+          value={info.name}
           name='name'
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
         <input
           type='text'
           placeholder='Company'
-          value={company}
+          value={info.company}
           name='company'
+          onChange={handleInputChange}
         />
         <select name='theme'>
-          <option value='Light' selected>
+          <option value='Light' defaultValue>
             Light
           </option>
           <option value='Dark'>Dark</option>
@@ -34,24 +39,32 @@ const CardFormList = ({ info,handleChange }) => {
         <input
           type='text'
           placeholder='Position'
-          value={position}
+          value={info.position}
           name='position'
+          onChange={handleChange}
         />
-        <input type='email' placeholder='Email' value={email} name='email' />
+        <input
+          type='email'
+          placeholder='Email'
+          value={info.email}
+          name='email'
+          onChange={handleChange}
+        />
       </div>
       <div>
         <textarea
           name='message'
           rows='2'
           placeholder='Message'
-          value={message}
+          value={info.message}
+          onChange={handleChange}
         ></textarea>
       </div>
       <div>
         <button>me</button>
         <button>Delete</button>
       </div>
-    </div>
+    </li>
   );
 };
 
