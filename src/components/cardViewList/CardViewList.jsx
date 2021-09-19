@@ -2,16 +2,15 @@ import React from 'react';
 import styles from './CardViewList.module.css';
 
 const CardViewList = ({ info }) => {
-  const { name, company, theme, position, email, message } = info;
   return (
     <div className={styles.card}>
       <div className={styles.image}>here is image.</div>
       <div className={styles.content}>
-        <span className={styles.name}>{name}</span>
-        <span className={styles.company}>{company}</span>
-        <span className={styles.position}>{position}</span>
-        <span className={styles.email}>{email}</span>
-        <span className={styles.message}>"{message}"</span>
+        <span className={styles.name}>{info.name}</span>
+        <span className={styles.company}>{info.company}</span>
+        <span className={styles.position}>{info.position}</span>
+        <span className={styles.email}>{info.email}</span>
+        <span className={styles.message}>"{info.message}"</span>
       </div>
     </div>
   );

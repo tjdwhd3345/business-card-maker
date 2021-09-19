@@ -10,7 +10,7 @@ const CardPreview = ({ cards }) => {
         <ul className={styles.list}>
           {cards.map((card) => (
             <li>
-              <CardViewList info={card} />
+              <CardViewList key={card} info={card} />
             </li>
           ))}
         </ul>
