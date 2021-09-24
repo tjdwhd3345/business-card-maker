@@ -3,7 +3,15 @@ import styles from './Intro.module.css';
 import { useHistory } from 'react-router-dom';
 import CardMaker from '../cardMaker/CardMaker';
 import CardPreview from '../cardPreview/CardPreview';
-import { child, get, ref, set, push, update, onValue } from 'firebase/database';
+import {
+  child,
+  get,
+  ref,
+  set,
+  push,
+  update,
+  onChildChanged,
+} from 'firebase/database';
 
 const Intro = ({ auth, db }) => {
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
@@ -46,9 +54,8 @@ const Intro = ({ auth, db }) => {
    * @param {string} key: 카드 객체의 고유 키
    */
   const handleOnChange = (e, key) => {
-    console.log('handleOnChange', e, key);
-
-    // TODO: 키값으로 firebase update
+    // console.log('handleOnChange', e, key);
+    // 키값으로 firebase update
     handleUpdate(e, key);
   };
 
@@ -62,6 +69,9 @@ const Intro = ({ auth, db }) => {
     });
   };
 
+  /**
+   * 접속 시 데이터 조회
+   */
   useEffect(() => {
     const dbRef = ref(db);
     get(child(dbRef, currentUser.uid + '/cards/'))
@@ -75,7 +85,7 @@ const Intro = ({ auth, db }) => {
             // result.push({ ...snapshot.val(), key: snapshot.key });
             result.push(snapshot.val());
           });
-          console.log('db get');
+          console.log('###### db get');
           setCards(result);
         } else {
           console.log('No data available');
@@ -89,30 +99,32 @@ const Intro = ({ auth, db }) => {
   /**
    * firebase 업데이트
    * @param {event} e: 이벤트
-   * @param {firebase ref} cardRef: 업데이트할 카드의 ref
+   * @param {firebase key} key: 업데이트할 카드의 key
    */
   const handleUpdate = (e, key) => {
     const cardRef = ref(db, currentUser.uid + '/cards/' + key);
-    update(cardRef, { [e.target.name]: e.target.value }).then(() => {
-      setCards((cards) => {
-        console.log('update setCards', cards, key);
-        return cards.map((card) => {
-          console.log(card, key, e.target.name, e.target.value);
-          if (card.key === key) card[e.target.name] = e.target.value;
-          return card;
-        });
-      });
-    });
+    update(cardRef, { [e.target.name]: e.target.value });
   };
 
+  /**
+   * firebase 업데이트 후 onChildChanged 리스너를 통해 preview 업데이트를 위해 state 변경
+   * useEffect 사용해서 리스너는 최초 렌더링 시에만 등록
+   */
   useEffect(() => {
-    /* console.log(currentUser.uid);
-    currentUser.getIdToken().then((ret) => {
-      console.log(ret);
+    const refs = ref(db, currentUser.uid + '/cards/');
+    onChildChanged(refs, (snapshot) => {
+      const data = snapshot.val();
+      // console.log('### onChildChanged:', data);
+      setCards((cards) =>
+        cards.map((card) => {
+          if (card.key === data.key) return data;
+          return card;
+        })
+      );
     });
-    currentUser.getIdTokenResult().then((ret) => {
-      console.log(ret);
-    }); */
+  }, []);
+
+  useEffect(() => {
     if (!currentUser) history.push('/');
   }, []);
 
