@@ -9,9 +9,7 @@ const CardPreview = ({ cards }) => {
         <h2>Card Preview</h2>
         <ul className={styles.list}>
           {cards.map((card) => (
-            <li>
-              <CardViewList key={card} info={card} />
-            </li>
+            <CardViewList key={card.key} info={card} />
           ))}
         </ul>
       </div>

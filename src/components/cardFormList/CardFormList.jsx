@@ -2,41 +2,33 @@ import React, { useState } from 'react';
 import styles from './CardFormList.module.css';
 
 const CardFormList = ({ info, handleChange }) => {
-  const [cardInfo, setCardInfo] = useState(info);
-
-  console.log('info', cardInfo);
-
   /**
    * 키 이벤트와 현재 카드 키값을 상위로 전달.
    * @param {e} e : 키보드 이벤트
    */
   const handleInputChange = (e) => {
-    setCardInfo({
-      ...cardInfo,
-      [e.target.name]: e.target.value,
-    });
-    handleChange(e, cardInfo.key);
+    handleChange(e, info.key);
   };
 
   return (
-    <div className={`${styles.content}`}>
+    <li>
       <div>
         <input
           type='text'
           placeholder='Name'
-          value={cardInfo.name}
+          value={info.name}
           name='name'
           onChange={handleInputChange}
         />
         <input
           type='text'
           placeholder='Company'
-          value={cardInfo.company}
+          value={info.company}
           name='company'
           onChange={handleInputChange}
         />
         <select name='theme'>
-          <option value='Light' selected>
+          <option value='Light' defaultValue>
             Light
           </option>
           <option value='Dark'>Dark</option>
@@ -47,14 +39,14 @@ const CardFormList = ({ info, handleChange }) => {
         <input
           type='text'
           placeholder='Position'
-          value={cardInfo.position}
+          value={info.position}
           name='position'
           onChange={handleChange}
         />
         <input
           type='email'
           placeholder='Email'
-          value={cardInfo.email}
+          value={info.email}
           name='email'
           onChange={handleChange}
         />
@@ -64,7 +56,7 @@ const CardFormList = ({ info, handleChange }) => {
           name='message'
           rows='2'
           placeholder='Message'
-          value={cardInfo.message}
+          value={info.message}
           onChange={handleChange}
         ></textarea>
       </div>
@@ -72,7 +64,7 @@ const CardFormList = ({ info, handleChange }) => {
         <button>me</button>
         <button>Delete</button>
       </div>
-    </div>
+    </li>
   );
 };
 
