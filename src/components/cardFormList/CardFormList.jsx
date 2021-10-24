@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { memo } from 'react';
 import styles from './CardFormList.module.css';
 
-const CardFormList = ({ info, handleChange }) => {
+const CardFormList = memo(({ info, handleChange }) => {
   /**
    * 키 이벤트와 현재 카드 키값을 상위로 전달.
    * @param {e} e : 키보드 이벤트
@@ -9,7 +9,7 @@ const CardFormList = ({ info, handleChange }) => {
   const handleInputChange = (e) => {
     handleChange(e, info.key);
   };
-
+  console.log('cardFormlist', info.key);
   return (
     <li>
       <div>
@@ -66,6 +66,6 @@ const CardFormList = ({ info, handleChange }) => {
       </div>
     </li>
   );
-};
+});
 
 export default CardFormList;
