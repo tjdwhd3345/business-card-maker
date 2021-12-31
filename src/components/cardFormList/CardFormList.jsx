@@ -1,11 +1,7 @@
-import React, { memo } from 'react';
+import React from 'react';
 import styles from './CardFormList.module.css';
 
-<<<<<<< HEAD
-const CardFormList = memo(({ info, handleChange }) => {
-=======
 const CardFormList = ({ info, handleChange }) => {
->>>>>>> 7a5f4b16f87da9a5f3f4a98e422ff9d9344513d1
   /**
    * 키 이벤트와 현재 카드 키값을 상위로 전달.
    * @param {e} e : 키보드 이벤트
@@ -13,14 +9,10 @@ const CardFormList = ({ info, handleChange }) => {
   const handleInputChange = (e) => {
     handleChange(e, info.key);
   };
-<<<<<<< HEAD
   console.log('cardFormlist', info.key);
-=======
-
->>>>>>> 7a5f4b16f87da9a5f3f4a98e422ff9d9344513d1
   return (
-    <li>
-      <div>
+    <li className={styles.formWrap}>
+      <div className={styles.formBlock}>
         <input
           type='text'
           placeholder='Name'
@@ -35,7 +27,7 @@ const CardFormList = ({ info, handleChange }) => {
           name='company'
           onChange={handleInputChange}
         />
-        <select name='theme'>
+        <select name='theme' onChange={handleInputChange}>
           <option value='Light' defaultValue>
             Light
           </option>
@@ -43,37 +35,37 @@ const CardFormList = ({ info, handleChange }) => {
           <option value='Colorful'>Colorful</option>
         </select>
       </div>
-      <div>
+      <div className={styles.formBlock}>
         <input
           type='text'
           placeholder='Position'
           value={info.position}
           name='position'
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
         <input
           type='email'
           placeholder='Email'
           value={info.email}
           name='email'
-          onChange={handleChange}
+          onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className={`${styles.formBlock} ${styles.msgBox}`}>
         <textarea
           name='message'
-          rows='2'
+          rows='4'
           placeholder='Message'
           value={info.message}
-          onChange={handleChange}
+          onChange={handleInputChange}
         ></textarea>
       </div>
-      <div>
+      <div className={styles.formBlock}>
         <button>me</button>
         <button>Delete</button>
       </div>
     </li>
   );
-});
+};
 
 export default CardFormList;

@@ -7,3 +7,21 @@
 .content div {
   flex: 1 1 0;
 }
+
+.formWrap {
+  border: 1px solid;
+  margin-top: 20px;
+}
+
+.formBlock {
+  display: flex;
+}
+.formBlock * {
+  flex: 1;
+  font-size: 16px;
+  padding: 0.125em;
+  height: 2em;
+}
+.formBlock.msgBox * {
+  height: 5em;
+}

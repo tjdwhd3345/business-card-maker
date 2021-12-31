@@ -1,6 +1,10 @@
 .loginForm {
   width: 80vw;
+  height: 100vh;
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .title,
@@ -52,9 +56,23 @@
   display: flex;
   background-color: #f3f3f3;
   justify-content: space-around;
+  height: 100%;
+  overflow: auto;
 }
 .content h1 {
   margin: 15px 0;
+}
+.content > div {
+  margin: 0 30px;
+}
+.content::before {
+  content: '';
+  position: absolute;
+  border: 1px dashed #80808082;
+  height: auto;
+  bottom: 41px;
+  top: 84px;
+  box-sizing: border-box;
 }
 
 .footer {
