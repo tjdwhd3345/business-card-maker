@@ -136,7 +136,7 @@ const Intro = ({ auth, db }) => {
             <h1>Business Card Maker</h1>
             <h1>hi, {currentUser.displayName}. this is Intro</h1>
           </div>
-          <div>
+          <div className={styles.controlBtn}>
             <button className={styles.add} onClick={handleAddCard}>
               Add Card
             </button>

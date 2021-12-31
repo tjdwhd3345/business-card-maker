@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './CardFormList.module.css';
 
 const CardFormList = ({ info, handleChange }) => {
+  const [themeOptions, setThemeOptions] = useState([
+    { value: 'Light', name: 'LightTheme' },
+    { value: 'Dark', name: 'DarkTheme' },
+    { value: 'Colorful', name: 'ColorfulTheme' },
+  ]);
   /**
    * 키 이벤트와 현재 카드 키값을 상위로 전달.
    * @param {e} e : 키보드 이벤트
@@ -28,11 +33,14 @@ const CardFormList = ({ info, handleChange }) => {
           onChange={handleInputChange}
         />
         <select name='theme' onChange={handleInputChange}>
-          <option value='Light' defaultValue>
-            Light
-          </option>
-          <option value='Dark'>Dark</option>
-          <option value='Colorful'>Colorful</option>
+          {themeOptions.map((option) => (
+            <option
+              value={option.value}
+              defaultValue={option.value === info.theme}
+            >
+              {option.value}
+            </option>
+          ))}
         </select>
       </div>
       <div className={styles.formBlock}>
