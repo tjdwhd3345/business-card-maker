@@ -19,8 +19,8 @@
 .formBlock * {
   flex: 1;
   font-size: 16px;
-  padding: 0.125em;
-  height: 2em;
+  padding: 0.25em;
+  /* height: 2em; */
 }
 .formBlock.msgBox * {
   height: 5em;

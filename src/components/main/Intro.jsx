@@ -11,6 +11,8 @@ import {
   push,
   update,
   onChildChanged,
+  remove,
+  onChildRemoved,
 } from 'firebase/database';
 
 const Intro = ({ auth, db }) => {
@@ -107,6 +109,17 @@ const Intro = ({ auth, db }) => {
   };
 
   /**
+   * firebase 삭제
+   * @param {event} e: 이벤트
+   * @param {firebase key} key: 삭제할 카드의 key
+   */
+  const handleRemove = (e, key) => {
+    console.log('intro handleRemove', e, key);
+    const cardRef = ref(db, currentUser.uid + '/cards/' + key);
+    remove(cardRef);
+  };
+
+  /**
    * firebase 업데이트 후 onChildChanged 리스너를 통해 preview 업데이트를 위해 state 변경
    * useEffect 사용해서 리스너는 최초 렌더링 시에만 등록
    */
@@ -122,6 +135,34 @@ const Intro = ({ auth, db }) => {
         })
       );
     });
+    onChildRemoved(refs, (snapshot) => {
+      console.log('### onChildRemoved', snapshot.val());
+      const dbRef = ref(db);
+      get(child(dbRef, currentUser.uid + '/cards/'))
+        .then((snapshots) => {
+          // console.log('snapshots', snapshots, snapshots.ref);
+          const result = [];
+          if (snapshots.exists()) {
+            // console.log(snapshots.val());
+            snapshots.forEach((snapshot) => {
+              // console.log(snapshot, snapshot.key);
+              // result.push({ ...snapshot.val(), key: snapshot.key });
+              result.push(snapshot.val());
+            });
+            console.log('###### db get');
+            setCards(result);
+          } else {
+            console.log('No data available');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+
+    /* onChildRemoved(refs, (snapshot) => {
+
+    }) */
   }, []);
 
   useEffect(() => {
@@ -146,7 +187,11 @@ const Intro = ({ auth, db }) => {
           </div>
         </div>
         <div className={styles.content}>
-          <CardMaker cards={cards} handleChange={handleOnChange} />
+          <CardMaker
+            cards={cards}
+            handleChange={handleOnChange}
+            handleRemove={handleRemove}
+          />
           <CardPreview cards={cards} />
         </div>
         <div onClick={handleUpdate} className={styles.footer}>

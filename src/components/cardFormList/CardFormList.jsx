@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './CardFormList.module.css';
 
-const CardFormList = ({ info, handleChange }) => {
+const CardFormList = ({ info, handleChange, handleRemove }) => {
   const [themeOptions, setThemeOptions] = useState([
     { value: 'Light', name: 'LightTheme' },
     { value: 'Dark', name: 'DarkTheme' },
@@ -13,6 +13,11 @@ const CardFormList = ({ info, handleChange }) => {
    */
   const handleInputChange = (e) => {
     handleChange(e, info.key);
+  };
+
+  const handleDelete = (e) => {
+    console.log('delete', e, info.key);
+    handleRemove(e, info.key);
   };
   console.log('cardFormlist', info.key);
   return (
@@ -70,7 +75,7 @@ const CardFormList = ({ info, handleChange }) => {
       </div>
       <div className={styles.formBlock}>
         <button>me</button>
-        <button>Delete</button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     </li>
   );

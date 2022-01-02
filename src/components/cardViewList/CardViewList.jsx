@@ -3,7 +3,7 @@ import styles from './CardViewList.module.css';
 
 const CardViewList = ({ info }) => {
   return (
-    <li className={styles.listWrap}>
+    <li className={styles.listWrap} key={info.key}>
       <div className={styles.card}>
         <div className={styles.image}>here is image.</div>
         <div className={styles.content}>
