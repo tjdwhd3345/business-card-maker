@@ -1,11 +1,14 @@
 import React from 'react';
 import styles from './CardViewList.module.css';
+import userImage from '../../user.png';
 
 const CardViewList = ({ info }) => {
   return (
     <li className={styles.listWrap} key={info.key}>
       <div className={styles.card}>
-        <div className={styles.image}>here is image.</div>
+        <div className={styles.image}>
+          <img src={userImage} alt='사용자 이미지' />
+        </div>
         <div className={styles.content}>
           <span className={styles.name}>{info.name}</span>
           <span className={styles.company}>{info.company}</span>

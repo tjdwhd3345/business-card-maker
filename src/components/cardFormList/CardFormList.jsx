@@ -74,8 +74,10 @@ const CardFormList = ({ info, handleChange, handleRemove }) => {
         ></textarea>
       </div>
       <div className={styles.formBlock}>
-        <button>me</button>
-        <button onClick={handleDelete}>Delete</button>
+        <button className={styles.btnName}>{info.name}</button>
+        <button className={styles.btnDelete} onClick={handleDelete}>
+          Delete
+        </button>
       </div>
     </li>
   );

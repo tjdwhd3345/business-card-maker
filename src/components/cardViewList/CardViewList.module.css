@@ -3,31 +3,53 @@
 }
 .card {
   display: flex;
-  border: 1px solid;
-  height: 174px;
+  border: 1px none;
+  border-radius: 20px;
+  height: 176px;
+  align-items: center;
+  box-sizing: content-box;
+  padding: 0 30px;
+  background-color: #fff;
+  -webkit-box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.3);
 }
 
 .image {
+  flex: 1;
+  margin-right: 30px;
+}
+.image img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
 
 .content {
+  flex: 3;
   display: flex;
   flex-direction: column;
+  text-align: left;
 }
 
 .name {
   font-size: 1.4rem;
   font-weight: 600;
 }
+.company {
+  margin: 5px 0;
+}
 
 .company::before {
   content: '';
   position: relative;
-  top: 23px;
+  top: 25px;
   display: block;
   border: 1px solid #eacb10;
 }
 
 .message {
   font-family: 'Courier New', Courier, monospace;
+  margin-top: 10px;
+  word-break: break-all;
 }

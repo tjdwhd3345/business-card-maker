@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import styles from './App.module.css';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { auth, signInWithGoogle, db } from './firebaseInit/firebaseInit';

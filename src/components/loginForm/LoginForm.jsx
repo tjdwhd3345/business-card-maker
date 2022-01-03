@@ -6,14 +6,18 @@ const LoginForm = ({ signInWithGoogle }) => {
   let history = useHistory();
 
   const handleClick = () => {
-    signInWithGoogle().then((result) => {
-      console.log('signInWithGoogle.then', result);
-      if (result.user) {
-        const { displayName, email, emailVerified } = result.user;
-        console.log(displayName, email, emailVerified, result.user);
-        if (emailVerified) history.push('/main');
-      }
-    });
+    signInWithGoogle()
+      .then((result) => {
+        console.log('signInWithGoogle.then', result);
+        if (result.user) {
+          const { displayName, email, emailVerified } = result.user;
+          console.log(displayName, email, emailVerified, result.user);
+          if (emailVerified) history.push('/main');
+        }
+      })
+      .catch((error) => {
+        console.log('signInWithGoogle.catch', error);
+      });
   };
 
   return (

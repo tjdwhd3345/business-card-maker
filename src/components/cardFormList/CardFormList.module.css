@@ -9,7 +9,7 @@
 }
 
 .formWrap {
-  border: 1px solid;
+  /* border: 1px solid; */
   margin-top: 20px;
 }
 
@@ -20,8 +20,22 @@
   flex: 1;
   font-size: 16px;
   padding: 0.25em;
-  /* height: 2em; */
+  height: 2em;
+  border: 1px solid black;
+}
+.formBlock *:focus {
+  outline: none;
 }
 .formBlock.msgBox * {
   height: 5em;
+}
+.btnName {
+  background-color: #fff;
+  color: #00539c;
+  font-weight: 600;
+}
+.btnDelete {
+  background-color: #00539c;
+  color: #fff;
+  font-weight: 600;
 }
