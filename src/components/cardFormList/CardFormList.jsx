@@ -111,7 +111,7 @@ const CardFormList = ({ info, handleChange, handleRemove }) => {
           onChange={onImageFileChange}
         ></input>
         <button className={styles.btnName} onClick={onBtnClick}>
-          {info.name || 'No Profile Image'}
+          {info.imageUrl ? info.name : 'No Profile Image'}
         </button>
         <button className={styles.btnDelete} onClick={handleDelete}>
           Delete

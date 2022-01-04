@@ -1,12 +1,4 @@
 import { initializeApp } from 'firebase/app';
-import {
-  browserSessionPersistence,
-  getAuth,
-  GoogleAuthProvider,
-  setPersistence,
-  signInWithPopup,
-} from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -18,16 +10,5 @@ const firebaseConfig = {
 };
 
 const firebase = initializeApp(firebaseConfig);
-
-getAuth(firebase).useDeviceLanguage();
-// 로그인상태 브라우저 세션으로 지속
-setPersistence(getAuth(firebase), browserSessionPersistence);
-export const auth = getAuth(firebase);
-
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => signInWithPopup(auth, provider);
-
-export const db = getDatabase(firebase);
 
 export default firebase;

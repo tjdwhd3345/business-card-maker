@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import AuthService from './services/authService';
+import DbService from './services/dbService';
 
+const authService = new AuthService();
+const dbService = new DbService();
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App authService={authService} dbService={dbService} />
   </React.StrictMode>,
   document.getElementById('root')
 );

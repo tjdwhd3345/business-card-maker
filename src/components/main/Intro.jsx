@@ -4,19 +4,17 @@ import { useHistory } from 'react-router-dom';
 import CardMaker from '../cardMaker/CardMaker';
 import CardPreview from '../cardPreview/CardPreview';
 import {
-  child,
-  get,
   ref,
-  set,
-  push,
   update,
   onChildChanged,
   remove,
   onChildRemoved,
+  onValue,
 } from 'firebase/database';
 
-const Intro = ({ auth, db }) => {
-  const [currentUser, setCurrentUser] = useState(auth.currentUser);
+const Intro = ({ authService, dbService }) => {
+  const currentUser = authService.auth.currentUser;
+  const dbApp = dbService.dbApp;
   const [cards, setCards] = useState([]);
   let history = useHistory();
 
@@ -24,33 +22,34 @@ const Intro = ({ auth, db }) => {
    * 빈 카드슬롯을 추가함
    */
   const handleAddCard = () => {
-    const listRef = ref(db, currentUser.uid + '/cards');
-    const newCardRef = push(listRef);
-    set(newCardRef, {
-      name: '',
-      company: '',
-      position: '',
-      theme: '',
-      email: '',
-      message: '',
-      imageUrl: '',
-      key: newCardRef.key,
-    }).then(() => {
+    const [newKey, result] = dbService.set(currentUser.uid + '/cards');
+    result.then(() => {
       setCards([
         ...cards,
         {
           name: '',
           company: '',
           position: '',
-          theme: '',
+          theme: 'Light',
           email: '',
           message: '',
           imageUrl: '',
-          key: newCardRef.key,
+          key: newKey,
         },
       ]);
     });
   };
+
+  /**
+   * 접속 시 데이터 조회
+   */
+  useEffect(() => {
+    dbService
+      .get(currentUser.uid) //
+      .then(async (result) => {
+        setCards(result);
+      });
+  }, []);
 
   /**
    * 카드 각 항목의 change 이벤트
@@ -64,50 +63,14 @@ const Intro = ({ auth, db }) => {
   };
 
   /**
-   * 로그아웃.
-   * 로그아웃 성공 시 로그인페이지로 전환됨
-   */
-  const handleSignOut = () => {
-    auth.signOut().then(() => {
-      history.push('/');
-    });
-  };
-
-  /**
-   * 접속 시 데이터 조회
-   */
-  useEffect(() => {
-    const dbRef = ref(db);
-    get(child(dbRef, currentUser.uid + '/cards/'))
-      .then((snapshots) => {
-        // console.log('snapshots', snapshots, snapshots.ref);
-        const result = [];
-        if (snapshots.exists()) {
-          // console.log(snapshots.val());
-          snapshots.forEach((snapshot) => {
-            // console.log(snapshot, snapshot.key);
-            // result.push({ ...snapshot.val(), key: snapshot.key });
-            result.push(snapshot.val());
-          });
-          console.log('###### db get');
-          setCards(result);
-        } else {
-          console.log('No data available');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  /**
    * firebase 업데이트
    * @param {event} e: 이벤트
    * @param {firebase key} key: 업데이트할 카드의 key
    */
   const handleUpdate = (e, key) => {
-    const cardRef = ref(db, currentUser.uid + '/cards/' + key);
-    update(cardRef, { [e.target.name]: e.target.value });
+    const refPath = currentUser.uid + '/cards/' + key;
+    const updateInfo = { [e.target.name]: e.target.value };
+    dbService.update(refPath, updateInfo);
   };
 
   /**
@@ -117,8 +80,8 @@ const Intro = ({ auth, db }) => {
    */
   const handleRemove = (e, key) => {
     console.log('intro handleRemove', e, key);
-    const cardRef = ref(db, currentUser.uid + '/cards/' + key);
-    remove(cardRef);
+    const refPath = currentUser.uid + '/cards/' + key;
+    dbService.remove(refPath);
   };
 
   /**
@@ -126,10 +89,13 @@ const Intro = ({ auth, db }) => {
    * useEffect 사용해서 리스너는 최초 렌더링 시에만 등록
    */
   useEffect(() => {
-    const refs = ref(db, currentUser.uid + '/cards/');
+    const refs = ref(dbApp, currentUser.uid + '/cards/');
+    onValue(refs, (snapshot) => {
+      console.log('### onValue: ', snapshot.val());
+    });
     onChildChanged(refs, (snapshot) => {
       const data = snapshot.val();
-      // console.log('### onChildChanged:', data);
+      console.log('### onChildChanged:', data);
       setCards((cards) =>
         cards.map((card) => {
           if (card.key === data.key) return data;
@@ -138,38 +104,28 @@ const Intro = ({ auth, db }) => {
       );
     });
     onChildRemoved(refs, (snapshot) => {
-      console.log('### onChildRemoved', snapshot.val());
-      const dbRef = ref(db);
-      get(child(dbRef, currentUser.uid + '/cards/'))
-        .then((snapshots) => {
-          // console.log('snapshots', snapshots, snapshots.ref);
-          const result = [];
-          if (snapshots.exists()) {
-            // console.log(snapshots.val());
-            snapshots.forEach((snapshot) => {
-              // console.log(snapshot, snapshot.key);
-              // result.push({ ...snapshot.val(), key: snapshot.key });
-              result.push(snapshot.val());
-            });
-            console.log('###### db get');
-            setCards(result);
-          } else {
-            console.log('No data available');
-          }
-        })
-        .catch((error) => {
-          console.error(error);
+      console.log('### onChildRemoved:');
+      dbService
+        .get(currentUser.uid) //
+        .then(async (result) => {
+          setCards(result);
         });
     });
-
-    /* onChildRemoved(refs, (snapshot) => {
-
-    }) */
   }, []);
 
   useEffect(() => {
     if (!currentUser) history.push('/');
   }, []);
+
+  /**
+   * 로그아웃.
+   * 로그아웃 성공 시 로그인페이지로 전환됨
+   */
+  const handleSignOut = () => {
+    authService.signOut().then(() => {
+      history.push('/');
+    });
+  };
 
   return (
     <>

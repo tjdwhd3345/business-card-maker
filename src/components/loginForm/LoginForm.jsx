@@ -2,11 +2,12 @@ import React from 'react';
 import styles from './LoginForm.module.css';
 import { useHistory } from 'react-router-dom';
 
-const LoginForm = ({ signInWithGoogle }) => {
+const LoginForm = ({ authService }) => {
   let history = useHistory();
 
-  const handleClick = () => {
-    signInWithGoogle()
+  const handleClick = (event) => {
+    authService
+      .signIn(event.target.textContent)
       .then((result) => {
         console.log('signInWithGoogle.then', result);
         if (result.user) {
@@ -27,7 +28,7 @@ const LoginForm = ({ signInWithGoogle }) => {
         <div className={styles.content}>
           <h2>Login</h2>
           <button onClick={handleClick}>Google</button>
-          <button>Github</button>
+          <button onClick={handleClick}>Github</button>
         </div>
         <div className={styles.footer}>Code your dream</div>
       </section>
