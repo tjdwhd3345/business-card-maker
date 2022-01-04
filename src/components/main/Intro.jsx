@@ -33,6 +33,7 @@ const Intro = ({ auth, db }) => {
       theme: '',
       email: '',
       message: '',
+      imageUrl: '',
       key: newCardRef.key,
     }).then(() => {
       setCards([
@@ -44,6 +45,7 @@ const Intro = ({ auth, db }) => {
           theme: '',
           email: '',
           message: '',
+          imageUrl: '',
           key: newCardRef.key,
         },
       ]);

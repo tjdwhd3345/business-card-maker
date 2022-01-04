@@ -29,6 +29,10 @@
 .formBlock.msgBox * {
   height: 5em;
 }
+
+.formBlock input[type='file'] {
+  display: none;
+}
 .btnName {
   background-color: #fff;
   color: #00539c;

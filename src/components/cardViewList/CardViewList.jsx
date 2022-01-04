@@ -7,7 +7,7 @@ const CardViewList = ({ info }) => {
     <li className={styles.listWrap} key={info.key}>
       <div className={styles.card}>
         <div className={styles.image}>
-          <img src={userImage} alt='사용자 이미지' />
+          <img src={info.imageUrl || userImage} alt='사용자 이미지' />
         </div>
         <div className={styles.content}>
           <span className={styles.name}>{info.name}</span>

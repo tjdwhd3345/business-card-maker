@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './CardFormList.module.css';
 
 const CardFormList = ({ info, handleChange, handleRemove }) => {
@@ -7,6 +7,7 @@ const CardFormList = ({ info, handleChange, handleRemove }) => {
     { value: 'Dark', name: 'DarkTheme' },
     { value: 'Colorful', name: 'ColorfulTheme' },
   ]);
+  const imageRef = useRef();
   /**
    * 키 이벤트와 현재 카드 키값을 상위로 전달.
    * @param {e} e : 키보드 이벤트
@@ -19,6 +20,34 @@ const CardFormList = ({ info, handleChange, handleRemove }) => {
     console.log('delete', e, info.key);
     handleRemove(e, info.key);
   };
+
+  const onBtnClick = (event) => {
+    event.preventDefault();
+    imageRef.current.click();
+  };
+
+  const onImageFileChange = async () => {
+    const file = imageRef.current.files[0];
+    const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+    const cloudApiKey = process.env.CLOUDINARY_API_KEY;
+    const imageUploadURL = `https://api.cloudinary.com/v1_1/drpteyub6/image/upload`;
+    console.log('onFileChange', file);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'dclwja8y');
+    const res = await fetch(imageUploadURL, {
+      method: 'POST',
+      body: formData,
+    });
+    const result = await res.json();
+    console.log('fetch result', result);
+    handleChange({ target: { name: 'imageUrl', value: result.url } }, info.key);
+    /* .then((response) => response.json())
+      .then((result) => {
+        console.log('fetch result', result);
+      }); */
+  };
+
   console.log('cardFormlist', info.key);
   return (
     <li className={styles.formWrap}>
@@ -74,7 +103,16 @@ const CardFormList = ({ info, handleChange, handleRemove }) => {
         ></textarea>
       </div>
       <div className={styles.formBlock}>
-        <button className={styles.btnName}>{info.name}</button>
+        <input
+          type='file'
+          name='profileImage'
+          ref={imageRef}
+          accept='image/*'
+          onChange={onImageFileChange}
+        ></input>
+        <button className={styles.btnName} onClick={onBtnClick}>
+          {info.name || 'No Profile Image'}
+        </button>
         <button className={styles.btnDelete} onClick={handleDelete}>
           Delete
         </button>
