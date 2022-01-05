@@ -5,7 +5,7 @@ import userImage from '../../user.png';
 const CardViewList = ({ info }) => {
   return (
     <li className={styles.listWrap} key={info.key}>
-      <div className={styles.card}>
+      <div className={`${styles.card} ${styles[info.theme]}`}>
         <div className={styles.image}>
           <img src={info.imageUrl || userImage} alt='사용자 이미지' />
         </div>

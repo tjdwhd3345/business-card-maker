@@ -49,7 +49,7 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
       .then(async (result) => {
         setCards(result);
       });
-  }, []);
+  }, [dbService, currentUser.uid]);
 
   /**
    * 카드 각 항목의 change 이벤트
@@ -110,11 +110,11 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
           setCards(result);
         });
     });
-  }, []);
+  }, [currentUser.uid, dbService, dbApp]);
 
   useEffect(() => {
     if (!currentUser) history.push('/');
-  }, []);
+  }, [currentUser, history]);
 
   /**
    * 로그아웃.

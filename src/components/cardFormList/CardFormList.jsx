@@ -8,11 +8,11 @@ const CardFormList = ({
   handleRemove,
   imageUploadService,
 }) => {
-  const [themeOptions, setThemeOptions] = useState([
+  const themeOptions = [
     { value: 'Light', name: 'LightTheme' },
     { value: 'Dark', name: 'DarkTheme' },
     { value: 'Colorful', name: 'ColorfulTheme' },
-  ]);
+  ];
   const [modalInfo, setModalInfo] = useState({
     modalType: 'confirm',
     modalVisible: false,
@@ -28,8 +28,21 @@ const CardFormList = ({
   };
 
   const handleDelete = (e) => {
-    console.log('delete', e, info.key);
-    handleRemove(e, info.key);
+    console.log('delete', info.key);
+    setModalInfo(() => ({
+      modalType: 'confirm',
+      modalVisible: true,
+      message: '삭제하시겠습니까?',
+    }));
+  };
+  const handleModalCallback = (result) => {
+    if (result === 'ok') {
+      handleRemove(info.key);
+    }
+    setModalInfo((modalInfo) => ({
+      ...modalInfo,
+      modalVisible: false,
+    }));
   };
 
   /**
@@ -40,13 +53,12 @@ const CardFormList = ({
     e.preventDefault();
     imageRef.current.click();
   };
-  const handleModalCallback = () => {};
 
   /**
    * 프로필 이미지 업로드 및 변경
    */
   const onImageFileChange = async () => {
-    setModalInfo((modalInfo) => ({
+    setModalInfo(() => ({
       modalType: 'progress',
       modalVisible: true,
       message: '이미지 업로드 중',
@@ -86,14 +98,9 @@ const CardFormList = ({
             name='company'
             onChange={handleInputChange}
           />
-          <select name='theme' onChange={handleInputChange}>
-            {themeOptions.map((option) => (
-              <option
-                value={option.value}
-                defaultValue={option.value === info.theme}
-              >
-                {option.value}
-              </option>
+          <select name='theme' onChange={handleInputChange} value={info.theme}>
+            {themeOptions.map((themeOption) => (
+              <option value={themeOption.value}>{themeOption.value}</option>
             ))}
           </select>
         </div>

@@ -14,6 +14,53 @@
   -moz-box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.3);
   box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.3);
 }
+.card.Light {
+}
+.card.Dark {
+  background-color: #000;
+  color: #fff;
+}
+.card.Colorful {
+  background: rgba(179, 220, 237, 1);
+  background: -moz-linear-gradient(
+    -45deg,
+    rgba(179, 220, 237, 1) 0%,
+    rgba(41, 184, 229, 1) 50%,
+    rgba(0, 83, 156, 1) 100%
+  );
+  background: -webkit-gradient(
+    left top,
+    right bottom,
+    color-stop(0%, rgba(179, 220, 237, 1)),
+    color-stop(50%, rgba(41, 184, 229, 1)),
+    color-stop(100%, rgba(0, 83, 156, 1))
+  );
+  background: -webkit-linear-gradient(
+    -45deg,
+    rgba(179, 220, 237, 1) 0%,
+    rgba(41, 184, 229, 1) 50%,
+    rgba(0, 83, 156, 1) 100%
+  );
+  background: -o-linear-gradient(
+    -45deg,
+    rgba(179, 220, 237, 1) 0%,
+    rgba(41, 184, 229, 1) 50%,
+    rgba(0, 83, 156, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    -45deg,
+    rgba(179, 220, 237, 1) 0%,
+    rgba(41, 184, 229, 1) 50%,
+    rgba(0, 83, 156, 1) 100%
+  );
+  background: linear-gradient(
+    135deg,
+    rgba(179, 220, 237, 1) 0%,
+    rgba(41, 184, 229, 1) 50%,
+    rgba(0, 83, 156, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#00539c', GradientType=1 );
+}
 
 .image {
   flex: 1;
