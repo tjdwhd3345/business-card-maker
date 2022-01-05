@@ -1,7 +1,12 @@
 import React, { useRef, useState } from 'react';
 import styles from './CardFormList.module.css';
 
-const CardFormList = ({ info, handleChange, handleRemove }) => {
+const CardFormList = ({
+  info,
+  handleChange,
+  handleRemove,
+  imageUploadService,
+}) => {
   const [themeOptions, setThemeOptions] = useState([
     { value: 'Light', name: 'LightTheme' },
     { value: 'Dark', name: 'DarkTheme' },
@@ -21,31 +26,23 @@ const CardFormList = ({ info, handleChange, handleRemove }) => {
     handleRemove(e, info.key);
   };
 
-  const onBtnClick = (event) => {
-    event.preventDefault();
+  /**
+   * 버튼 클릭 시 input click 이벤트 실행
+   * @param {event} event
+   */
+  const onBtnClick = (e) => {
+    e.preventDefault();
     imageRef.current.click();
   };
 
+  /**
+   * 프로필 이미지 업로드 및 변경
+   */
   const onImageFileChange = async () => {
     const file = imageRef.current.files[0];
-    const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-    const cloudApiKey = process.env.CLOUDINARY_API_KEY;
-    const imageUploadURL = `https://api.cloudinary.com/v1_1/drpteyub6/image/upload`;
-    console.log('onFileChange', file);
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'dclwja8y');
-    const res = await fetch(imageUploadURL, {
-      method: 'POST',
-      body: formData,
-    });
-    const result = await res.json();
+    const result = await imageUploadService.upload(file);
     console.log('fetch result', result);
     handleChange({ target: { name: 'imageUrl', value: result.url } }, info.key);
-    /* .then((response) => response.json())
-      .then((result) => {
-        console.log('fetch result', result);
-      }); */
   };
 
   console.log('cardFormlist', info.key);

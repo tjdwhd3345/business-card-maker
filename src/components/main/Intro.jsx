@@ -12,7 +12,7 @@ import {
   onValue,
 } from 'firebase/database';
 
-const Intro = ({ authService, dbService }) => {
+const Intro = ({ authService, dbService, imageUploadService }) => {
   const currentUser = authService.auth.currentUser;
   const dbApp = dbService.dbApp;
   const [cards, setCards] = useState([]);
@@ -149,6 +149,7 @@ const Intro = ({ authService, dbService }) => {
             cards={cards}
             handleChange={handleOnChange}
             handleRemove={handleRemove}
+            imageUploadService={imageUploadService}
           />
           <CardPreview cards={cards} />
         </div>

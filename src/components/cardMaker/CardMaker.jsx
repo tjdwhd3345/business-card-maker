@@ -2,7 +2,12 @@ import React from 'react';
 import CardFormList from '../cardFormList/CardFormList';
 import styles from './CardMaker.module.css';
 
-const CardMaker = ({ cards, handleChange, handleRemove }) => {
+const CardMaker = ({
+  cards,
+  handleChange,
+  handleRemove,
+  imageUploadService,
+}) => {
   return (
     <div className={styles.wrap}>
       <div className={styles.title}>
@@ -15,6 +20,7 @@ const CardMaker = ({ cards, handleChange, handleRemove }) => {
             info={card}
             handleChange={handleChange}
             handleRemove={handleRemove}
+            imageUploadService={imageUploadService}
           />
         ))}
       </ul>

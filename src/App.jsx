@@ -4,7 +4,7 @@ import LoginForm from './components/loginForm/LoginForm';
 import Intro from './components/main/Intro';
 import React from 'react';
 
-const App = ({ authService, dbService }) => {
+const App = ({ authService, dbService, imageUploadService }) => {
   return (
     <div className={styles.App}>
       <BrowserRouter>
@@ -13,7 +13,11 @@ const App = ({ authService, dbService }) => {
             <LoginForm authService={authService} />
           </Route>
           <Route path='/main' exact>
-            <Intro authService={authService} dbService={dbService} />
+            <Intro
+              authService={authService}
+              dbService={dbService}
+              imageUploadService={imageUploadService}
+            />
           </Route>
         </Switch>
       </BrowserRouter>
