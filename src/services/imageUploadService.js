@@ -13,7 +13,7 @@ class ImageUploadService {
       method: 'POST',
       body: formData,
     });
-    return await res.json();
+    return res.json();
   }
 }
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './LoginForm.module.css';
 import { useHistory } from 'react-router-dom';
+import Modal from '../modal/Modal';
 
 const LoginForm = ({ authService }) => {
   let history = useHistory();

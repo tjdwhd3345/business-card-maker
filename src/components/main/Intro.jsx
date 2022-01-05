@@ -5,17 +5,17 @@ import CardMaker from '../cardMaker/CardMaker';
 import CardPreview from '../cardPreview/CardPreview';
 import {
   ref,
-  update,
   onChildChanged,
-  remove,
   onChildRemoved,
   onValue,
 } from 'firebase/database';
+import Modal from '../modal/Modal';
 
 const Intro = ({ authService, dbService, imageUploadService }) => {
   const currentUser = authService.auth.currentUser;
   const dbApp = dbService.dbApp;
   const [cards, setCards] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
   let history = useHistory();
 
   /**
@@ -75,11 +75,10 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
 
   /**
    * firebase 삭제
-   * @param {event} e: 이벤트
    * @param {firebase key} key: 삭제할 카드의 key
    */
-  const handleRemove = (e, key) => {
-    console.log('intro handleRemove', e, key);
+  const handleRemove = (key) => {
+    console.log('intro handleRemove', key);
     const refPath = currentUser.uid + '/cards/' + key;
     dbService.remove(refPath);
   };
@@ -122,9 +121,15 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
    * 로그아웃 성공 시 로그인페이지로 전환됨
    */
   const handleSignOut = () => {
-    authService.signOut().then(() => {
-      history.push('/');
-    });
+    setModalVisible(true);
+  };
+  const handleModalCallback = (result) => {
+    if (result === 'ok') {
+      authService.signOut().then(() => {
+        history.push('/');
+      });
+    }
+    setModalVisible(false);
   };
 
   return (
@@ -153,10 +158,14 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
           />
           <CardPreview cards={cards} />
         </div>
-        <div onClick={handleUpdate} className={styles.footer}>
-          Code your dream
-        </div>
+        <div className={styles.footer}>Code your dream</div>
       </section>
+      <Modal
+        modalType={'confirm'}
+        visible={modalVisible}
+        message={'로그아웃 하시겠습니까?'}
+        callback={handleModalCallback}
+      ></Modal>
     </>
   );
 };
