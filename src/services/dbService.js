@@ -62,7 +62,7 @@ class DbService {
   }
 
   async remove(path) {
-    console.log(path);
+    console.log('dbService js', path);
     const cardRef = ref(this.dbApp, path);
     return remove(cardRef);
   }

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './CardViewList.module.css';
 import userImage from '../../user.png';
 
-const CardViewList = ({ info }) => {
+const CardViewList = memo(({ info }) => {
   return (
     <li className={styles.listWrap} key={info.key}>
       <div className={`${styles.card} ${styles[info.theme]}`}>
@@ -19,6 +19,6 @@ const CardViewList = ({ info }) => {
       </div>
     </li>
   );
-};
+});
 
 export default CardViewList;

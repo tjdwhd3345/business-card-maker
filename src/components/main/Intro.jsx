@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Intro.module.css';
 import { useHistory } from 'react-router-dom';
 import CardMaker from '../cardMaker/CardMaker';
@@ -22,6 +22,7 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
     authService.onAuthChanged((user) => {
       !user && history.push('/');
     });
+    console.log('effect 1');
   });
 
   /**
@@ -55,6 +56,7 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
       .then(async (result) => {
         setCards(result);
       });
+    console.log('effect 2, dbSevice, currentUser.uid');
   }, [dbService, currentUser.uid]);
 
   /**
@@ -62,32 +64,29 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
    * @param {event} e: 키보드 이벤트
    * @param {string} key: 카드 객체의 고유 키
    */
-  const handleOnChange = (e, key) => {
-    // console.log('handleOnChange', e, key);
-    // 키값으로 firebase update
-    handleUpdate(e, key);
-  };
-
-  /**
-   * firebase 업데이트
-   * @param {event} e: 이벤트
-   * @param {firebase key} key: 업데이트할 카드의 key
-   */
-  const handleUpdate = (e, key) => {
-    const refPath = currentUser.uid + '/cards/' + key;
-    const updateInfo = { [e.target.name]: e.target.value };
-    dbService.update(refPath, updateInfo);
-  };
+  const handleOnChange = useCallback(
+    (e, key) => {
+      // console.log('handleOnChange', e, key);
+      // 키값으로 firebase update
+      const refPath = currentUser.uid + '/cards/' + key;
+      const updateInfo = { [e.target.name]: e.target.value };
+      dbService.update(refPath, updateInfo);
+    },
+    [currentUser.uid, dbService]
+  );
 
   /**
    * firebase 삭제
    * @param {firebase key} key: 삭제할 카드의 key
    */
-  const handleRemove = (key) => {
-    console.log('intro handleRemove', key);
-    const refPath = currentUser.uid + '/cards/' + key;
-    dbService.remove(refPath);
-  };
+  const handleRemove = useCallback(
+    (key) => {
+      console.log('intro handleRemove', key);
+      const refPath = currentUser.uid + '/cards/' + key;
+      dbService.remove(refPath);
+    },
+    [currentUser.uid, dbService]
+  );
 
   /**
    * firebase 업데이트 후 onChildChanged 리스너를 통해 preview 업데이트를 위해 state 변경
@@ -95,9 +94,10 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
    */
   useEffect(() => {
     const refs = ref(dbApp, currentUser.uid + '/cards/');
-    onValue(refs, (snapshot) => {
+    /* onValue(refs, (snapshot) => {
       console.log('### onValue: ', snapshot.val());
-    });
+      setCards(Object.values(snapshot.val()));
+    }); */
     onChildChanged(refs, (snapshot) => {
       const data = snapshot.val();
       console.log('### onChildChanged:', data);
@@ -116,6 +116,7 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
           setCards(result);
         });
     });
+    console.log('effect 3, currentUser.uid, dbService, dbApp');
   }, [currentUser.uid, dbService, dbApp]);
 
   /**
