@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   setPersistence,
   browserSessionPersistence,
+  onAuthStateChanged,
 } from 'firebase/auth';
 
 class AuthService {
@@ -41,6 +42,12 @@ class AuthService {
    */
   signOut() {
     return this.auth.signOut();
+  }
+
+  onAuthChanged(onUserChanged) {
+    onAuthStateChanged(this.auth, (user) => {
+      onUserChanged(user);
+    });
   }
 }
 

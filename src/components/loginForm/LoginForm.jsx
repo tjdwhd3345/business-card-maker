@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './LoginForm.module.css';
 import { useHistory } from 'react-router-dom';
 
 const LoginForm = ({ authService }) => {
   let history = useHistory();
 
-  const handleClick = (event) => {
+  const goToMain = (userId) => {
+    history.push({
+      pathname: '/main',
+      state: userId,
+    });
+  };
+
+  const handleSignIn = (event) => {
     authService
       .signIn(event.target.textContent)
       .then((result) => {
@@ -13,7 +20,7 @@ const LoginForm = ({ authService }) => {
         if (result.user) {
           const { displayName, email, emailVerified } = result.user;
           console.log(displayName, email, emailVerified, result.user);
-          if (emailVerified) history.push('/main');
+          if (emailVerified) goToMain(result.user.uid);
         }
       })
       .catch((error) => {
@@ -21,14 +28,20 @@ const LoginForm = ({ authService }) => {
       });
   };
 
+  useEffect(() => {
+    authService.onAuthChanged((user) => {
+      user && goToMain(user.uid);
+    });
+  });
+
   return (
     <>
       <section className={styles.loginForm}>
         <h2 className={styles.title}>Business Card Maker</h2>
         <div className={styles.content}>
           <h2>Login</h2>
-          <button onClick={handleClick}>Google</button>
-          <button onClick={handleClick}>Github</button>
+          <button onClick={handleSignIn}>Google</button>
+          <button onClick={handleSignIn}>Github</button>
         </div>
         <div className={styles.footer}>Code your dream</div>
       </section>
