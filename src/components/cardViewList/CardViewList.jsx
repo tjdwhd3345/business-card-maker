@@ -10,11 +10,11 @@ const CardViewList = ({ info }) => {
           <img src={info.imageUrl || userImage} alt='사용자 이미지' />
         </div>
         <div className={styles.content}>
-          <span className={styles.name}>{info.name}</span>
-          <span className={styles.company}>{info.company}</span>
-          <span className={styles.position}>{info.position}</span>
-          <span className={styles.email}>{info.email}</span>
-          <span className={styles.message}>"{info.message}"</span>
+          <p className={styles.name}>{info.name}</p>
+          <p className={styles.company}>{info.company}</p>
+          <p className={styles.position}>{info.position}</p>
+          <p className={styles.email}>{info.email}</p>
+          <p className={styles.message}>"{info.message}"</p>
         </div>
       </div>
     </li>

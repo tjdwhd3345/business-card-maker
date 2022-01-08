@@ -18,6 +18,12 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
   const [modalVisible, setModalVisible] = useState(false);
   let history = useHistory();
 
+  useEffect(() => {
+    authService.onAuthChanged((user) => {
+      !user && history.push('/');
+    });
+  });
+
   /**
    * 빈 카드슬롯을 추가함
    */
@@ -111,10 +117,6 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
         });
     });
   }, [currentUser.uid, dbService, dbApp]);
-
-  useEffect(() => {
-    if (!currentUser) history.push('/');
-  }, [currentUser, history]);
 
   /**
    * 로그아웃.

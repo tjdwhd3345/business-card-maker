@@ -1,5 +1,6 @@
 .listWrap {
-  margin-top: 20px;
+  margin: 20px auto 0;
+  max-width: 35rem;
 }
 .card {
   display: flex;

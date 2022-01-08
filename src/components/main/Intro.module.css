@@ -66,7 +66,7 @@
   margin: 15px 0;
 }
 .content > div {
-  margin: 0 30px;
+  padding: 0 30px;
 }
 .content::before {
   content: '';
@@ -81,4 +81,17 @@
 .footer {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+@media screen and (max-width: 1350px) {
+  .content {
+    overflow: hidden;
+    flex-direction: column;
+  }
+  .content > div {
+    overflow: auto;
+  }
+  .content::before {
+    display: none;
+  }
 }
