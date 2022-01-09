@@ -1,5 +1,6 @@
 .wrap {
   flex-basis: 50%;
+  border-right: 1px dashed #80808082;
 }
 
 .title {
@@ -9,4 +10,11 @@
 .list {
   list-style: none;
   padding-bottom: 30px;
+}
+
+@media screen and (max-width: 1350px) {
+  .wrap {
+    border-right: none;
+    border-bottom: 1px dashed mainLightGrey;
+  }
 }

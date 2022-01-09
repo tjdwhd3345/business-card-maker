@@ -10,12 +10,15 @@ import {
   onValue,
 } from 'firebase/database';
 import Modal from '../modal/Modal';
+import CardFormSkeleton from '../skeleton/CardFormSkeleton';
+import CardViewSkeleton from '../skeleton/CardViewSkeleton';
 
 const Intro = ({ authService, dbService, imageUploadService }) => {
   const currentUser = authService.auth.currentUser;
   const dbApp = dbService.dbApp;
   const [cards, setCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   let history = useHistory();
 
   useEffect(() => {
@@ -55,7 +58,9 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
       .get(currentUser.uid) //
       .then(async (result) => {
         setCards(result);
+        setIsLoaded(true);
       });
+
     console.log('effect 2, dbSevice, currentUser.uid');
   }, [dbService, currentUser.uid]);
 
@@ -141,7 +146,6 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
         <div className={styles.title}>
           <div>
             <h1>Business Card Maker</h1>
-            <h1>hi, {currentUser.displayName}. this is Intro</h1>
           </div>
           <div className={styles.controlBtn}>
             <button className={styles.add} onClick={handleAddCard}>
@@ -153,13 +157,22 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
           </div>
         </div>
         <div className={styles.content}>
-          <CardMaker
-            cards={cards}
-            handleChange={handleOnChange}
-            handleRemove={handleRemove}
-            imageUploadService={imageUploadService}
-          />
-          <CardPreview cards={cards} />
+          {isLoaded ? (
+            <>
+              <CardMaker
+                cards={cards}
+                handleChange={handleOnChange}
+                handleRemove={handleRemove}
+                imageUploadService={imageUploadService}
+              />
+              <CardPreview cards={cards} />
+            </>
+          ) : (
+            <>
+              <CardFormSkeleton />
+              <CardViewSkeleton />
+            </>
+          )}
         </div>
         <div className={styles.footer}>Code your dream</div>
       </section>

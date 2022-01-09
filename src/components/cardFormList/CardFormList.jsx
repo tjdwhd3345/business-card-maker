@@ -78,7 +78,7 @@ const CardFormList = memo(
     console.log('cardFormlist', info.key);
     return (
       <>
-        <li className={styles.formWrap}>
+        <li className={styles.formWrap} key={info.key}>
           <div className={styles.formBlock}>
             <input
               type='text'
@@ -99,8 +99,10 @@ const CardFormList = memo(
               onChange={handleInputChange}
               value={info.theme}
             >
-              {themeOptions.map((themeOption) => (
-                <option value={themeOption.value}>{themeOption.value}</option>
+              {themeOptions.map((themeOption, i) => (
+                <option value={themeOption.value} key={i}>
+                  {themeOption.value}
+                </option>
               ))}
             </select>
           </div>

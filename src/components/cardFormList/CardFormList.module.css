@@ -11,7 +11,8 @@
 .formWrap {
   border-top: 1px solid black;
   border-left: 1px solid black;
-  margin-top: 20px;
+  margin: 20px auto 0;
+  max-width: 35rem;
 }
 
 .formBlock {

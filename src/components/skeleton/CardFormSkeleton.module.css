@@ -1,0 +1,67 @@
+@value mainWhite, subWhite, mainBlack from '../common/colors.css';
+@value mediaMobile from '../common/size.css';
+
+.wrap {
+  flex-basis: 50%;
+  border-right: 1px dashed mainLightGrey;
+}
+
+.title {
+  margin-top: 30px;
+}
+
+.list {
+  list-style: none;
+  padding-bottom: 30px;
+}
+
+.formWrap {
+  border-top: 1px solid mainBlack;
+  border-left: 1px solid mainBlack;
+  margin: 1.25rem auto 0;
+  width: 35rem;
+  background-color: mainWhite;
+}
+
+.formBlock {
+  display: flex;
+}
+.formBlock * {
+  flex: 1;
+  font-size: 16px;
+  padding: 0.75em;
+  height: 2em;
+  border: 0;
+  border-right: 1px solid mainBlack;
+  border-bottom: 1px solid mainBlack;
+  background-color: mainWhite;
+}
+
+.formBlock.msgBox * {
+  height: 5em;
+  resize: none;
+}
+.formBlock:last-child {
+  flex-direction: row;
+}
+.formBlock input[type='file'] {
+  display: none;
+}
+.btnName {
+  background-color: subWhite;
+  font-weight: 600;
+}
+.btnDelete {
+  background-color: subWhite;
+  font-weight: 600;
+}
+
+@media screen and (max-width: mediaMobile) {
+  .formWrap {
+    width: unset;
+    margin: 2.5rem auto 0;
+  }
+  .formBlock {
+    flex-direction: column;
+  }
+}
