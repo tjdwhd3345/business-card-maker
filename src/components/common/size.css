@@ -1,0 +1,4 @@
+/* 태블릿 */
+@value mediaTablet: 1023px;
+/* 모바일 */
+@value mediaMobile: 767px;

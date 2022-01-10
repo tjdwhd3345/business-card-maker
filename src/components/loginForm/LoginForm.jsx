@@ -39,7 +39,7 @@ const LoginForm = ({ authService }) => {
       <section className={styles.loginForm}>
         <h2 className={styles.title}>Business Card Maker</h2>
         <div className={styles.content}>
-          <h2>Login</h2>
+          <h2>Sign In</h2>
           <button onClick={handleSignIn}>Google</button>
           <button onClick={handleSignIn}>Github</button>
         </div>

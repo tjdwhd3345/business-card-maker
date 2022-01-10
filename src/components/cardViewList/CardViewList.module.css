@@ -1,6 +1,9 @@
+@value mainWhite, mainBlue, mainBlack, mainShadow from '../common/colors.css';
+@value mediaMobile from '../common/size.css';
+
 .listWrap {
-  margin: 20px auto 0;
-  max-width: 35rem;
+  margin: 1.25rem auto 0;
+  width: 35rem;
 }
 .card {
   display: flex;
@@ -10,16 +13,18 @@
   align-items: center;
   box-sizing: content-box;
   padding: 0 30px;
-  background-color: #fff;
-  -webkit-box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.3);
-  box-shadow: 10px 10px 20px -5px rgba(0, 0, 0, 0.3);
+  background-color: mainWhite;
+  -webkit-box-shadow: 10px 10px 20px -5px mainShadow;
+  -moz-box-shadow: 10px 10px 20px -5px mainShadow;
+  box-shadow: 10px 10px 20px -5px mainShadow;
 }
 .card.Light {
+  background-color: mainWhite;
+  color: mainBlack;
 }
 .card.Dark {
-  background-color: #000;
-  color: #fff;
+  background-color: mainBlack;
+  color: mainWhite;
 }
 .card.Colorful {
   background: rgba(179, 220, 237, 1);
@@ -68,8 +73,8 @@
   margin-right: 30px;
 }
 .image img {
-  width: 150px;
-  height: 150px;
+  width: 9rem;
+  height: 9rem;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -101,4 +106,30 @@
   font-family: 'Courier New', Courier, monospace;
   margin-top: 10px;
   word-break: break-all;
+  text-overflow: ellipsis;
+  line-height: 1.2rem;
+  height: 2.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media screen and (max-width: mediaMobile) {
+  .listWrap {
+    width: unset;
+    margin: 2.5rem auto 0;
+  }
+  .card {
+    padding: 0 1rem;
+  }
+  .image {
+    margin-right: 1.5rem;
+  }
+  .image img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }

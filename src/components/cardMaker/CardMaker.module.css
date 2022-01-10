@@ -1,6 +1,9 @@
+@value mainLightGrey from '../common/colors.css';
+@value mediaMobile from '../common/size.css';
+
 .wrap {
   flex-basis: 50%;
-  border-right: 1px dashed #80808082;
+  border-right: 1px dashed mainLightGrey;
 }
 
 .title {
@@ -12,7 +15,7 @@
   padding-bottom: 30px;
 }
 
-@media screen and (max-width: 1350px) {
+@media screen and (max-width: mediaMobile) {
   .wrap {
     border-right: none;
     border-bottom: 1px dashed mainLightGrey;

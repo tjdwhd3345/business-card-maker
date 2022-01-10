@@ -10,11 +10,11 @@ const CardViewList = memo(({ info }) => {
           <img src={info.imageUrl || userImage} alt='사용자 이미지' />
         </div>
         <div className={styles.content}>
-          <p className={styles.name}>{info.name}</p>
-          <p className={styles.company}>{info.company}</p>
-          <p className={styles.position}>{info.position}</p>
-          <p className={styles.email}>{info.email}</p>
-          <p className={styles.message}>"{info.message}"</p>
+          <p className={styles.name}>{info.name || '이름'}</p>
+          <p className={styles.company}>{info.company || '소속'}</p>
+          <p className={styles.position}>{info.position || '직급'}</p>
+          <p className={styles.email}>{info.email || '이메일'}</p>
+          <p className={styles.message}>"{info.message || '코멘트'}"</p>
         </div>
       </div>
     </li>

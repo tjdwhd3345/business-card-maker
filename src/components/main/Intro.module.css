@@ -1,5 +1,9 @@
+@value mainWhite, subWhite, mainBlue, subBlue, mainBlack, mainShadow from '../common/colors.css';
+@value mediaMobile from '../common/size.css';
+
 .loginForm {
   width: 80vw;
+  min-width: 78.125rem;
   height: 100vh;
   cursor: default;
   display: flex;
@@ -10,8 +14,8 @@
 .title,
 .footer {
   /* background-color: #204938; */
-  background-color: #00539c;
-  color: #f3f3f3;
+  background-color: mainBlue;
+  color: subWhite;
   padding: 10px 0;
 }
 .title {
@@ -32,9 +36,9 @@
 
 .add {
   font-size: 1em;
-  background-color: #00539c;
-  color: #fff;
-  border: 2px solid #f3f3f3;
+  background-color: mainBlue;
+  color: mainWhite;
+  border: 2px solid subWhite;
   border-radius: 5px;
   cursor: pointer;
   padding: 5px;
@@ -43,21 +47,21 @@
 
 .signOut {
   font-size: 1em;
-  background-color: #00539c;
-  color: #fff;
-  border: 2px solid #f3f3f3;
+  background-color: mainBlue;
+  color: mainWhite;
+  border: 2px solid subWhite;
   border-radius: 5px;
   cursor: pointer;
   padding: 5px;
 }
 .signOut:hover {
-  background-color: #9cc3d5;
-  color: #000000;
+  background-color: subBlue;
+  color: mainBlack;
 }
 
 .content {
   display: flex;
-  background-color: #f3f3f3;
+  background-color: subWhite;
   justify-content: space-around;
   height: 100%;
   overflow: auto;

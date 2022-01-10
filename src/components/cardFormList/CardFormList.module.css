@@ -1,3 +1,6 @@
+@value mainWhite, mainBlue, mainBlack from '../common/colors.css';
+@value mediaMobile from '../common/size.css';
+
 .content {
   padding: 0 50px;
   display: flex;
@@ -9,10 +12,10 @@
 }
 
 .formWrap {
-  border-top: 1px solid black;
-  border-left: 1px solid black;
-  margin: 20px auto 0;
-  max-width: 35rem;
+  border-top: 1px solid mainBlack;
+  border-left: 1px solid mainBlack;
+  margin: 1.25rem auto 0;
+  width: 35rem;
 }
 
 .formBlock {
@@ -24,26 +27,39 @@
   padding: 0.25em;
   height: 2em;
   border: 0;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  border-right: 1px solid mainBlack;
+  border-bottom: 1px solid mainBlack;
 }
 .formBlock *:focus {
   outline: none;
 }
 .formBlock.msgBox * {
   height: 5em;
+  resize: none;
 }
-
+.formBlock:last-child {
+  flex-direction: row;
+}
 .formBlock input[type='file'] {
   display: none;
 }
 .btnName {
-  background-color: #fff;
-  color: #00539c;
+  background-color: mainWhite;
+  color: mainBlue;
   font-weight: 600;
 }
 .btnDelete {
-  background-color: #00539c;
-  color: #fff;
+  background-color: mainBlue;
+  color: mainWhite;
   font-weight: 600;
+}
+
+@media screen and (max-width: mediaMobile) {
+  .formWrap {
+    width: unset;
+    margin: 2.5rem auto 0;
+  }
+  .formBlock {
+    flex-direction: column;
+  }
 }
