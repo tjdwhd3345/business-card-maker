@@ -1,25 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styles from './Intro.module.css';
 import { useHistory } from 'react-router-dom';
+import { ref, onChildChanged, onChildRemoved } from 'firebase/database';
+import styles from './Intro.module.css';
 import CardMaker from '../cardMaker/CardMaker';
 import CardPreview from '../cardPreview/CardPreview';
-import {
-  ref,
-  onChildChanged,
-  onChildRemoved,
-  onValue,
-} from 'firebase/database';
 import Modal from '../modal/Modal';
 import CardFormSkeleton from '../skeleton/CardFormSkeleton';
 import CardViewSkeleton from '../skeleton/CardViewSkeleton';
 
 const Intro = ({ authService, dbService, imageUploadService }) => {
-  const currentUser = authService.auth.currentUser;
   const dbApp = dbService.dbApp;
   const [cards, setCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   let history = useHistory();
+  const currentUserUid = history.location.state;
 
   useEffect(() => {
     authService.onAuthChanged((user) => {
@@ -32,7 +27,7 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
    * 빈 카드슬롯을 추가함
    */
   const handleAddCard = () => {
-    const [newKey, result] = dbService.set(currentUser.uid + '/cards');
+    const [newKey, result] = dbService.set(currentUserUid + '/cards');
     result.then(() => {
       setCards([
         ...cards,
@@ -55,14 +50,14 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
    */
   useEffect(() => {
     dbService
-      .get(currentUser.uid) //
+      .get(currentUserUid) //
       .then(async (result) => {
         setCards(result);
         setIsLoaded(true);
       });
 
-    console.log('effect 2, dbSevice, currentUser.uid');
-  }, [dbService, currentUser.uid]);
+    console.log('effect 2, dbSevice, currentUserUid');
+  }, [dbService, currentUserUid]);
 
   /**
    * 카드 각 항목의 change 이벤트
@@ -73,11 +68,11 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
     (e, key) => {
       // console.log('handleOnChange', e, key);
       // 키값으로 firebase update
-      const refPath = currentUser.uid + '/cards/' + key;
+      const refPath = currentUserUid + '/cards/' + key;
       const updateInfo = { [e.target.name]: e.target.value };
       dbService.update(refPath, updateInfo);
     },
-    [currentUser.uid, dbService]
+    [currentUserUid, dbService]
   );
 
   /**
@@ -87,10 +82,10 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
   const handleRemove = useCallback(
     (key) => {
       console.log('intro handleRemove', key);
-      const refPath = currentUser.uid + '/cards/' + key;
+      const refPath = currentUserUid + '/cards/' + key;
       dbService.remove(refPath);
     },
-    [currentUser.uid, dbService]
+    [currentUserUid, dbService]
   );
 
   /**
@@ -98,7 +93,7 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
    * useEffect 사용해서 리스너는 최초 렌더링 시에만 등록
    */
   useEffect(() => {
-    const refs = ref(dbApp, currentUser.uid + '/cards/');
+    const refs = ref(dbApp, currentUserUid + '/cards/');
     /* onValue(refs, (snapshot) => {
       console.log('### onValue: ', snapshot.val());
       setCards(Object.values(snapshot.val()));
@@ -116,13 +111,13 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
     onChildRemoved(refs, (snapshot) => {
       console.log('### onChildRemoved:');
       dbService
-        .get(currentUser.uid) //
+        .get(currentUserUid) //
         .then(async (result) => {
           setCards(result);
         });
     });
-    console.log('effect 3, currentUser.uid, dbService, dbApp');
-  }, [currentUser.uid, dbService, dbApp]);
+    console.log('effect 3, currentUserUid, dbService, dbApp');
+  }, [currentUserUid, dbService, dbApp]);
 
   /**
    * 로그아웃.
