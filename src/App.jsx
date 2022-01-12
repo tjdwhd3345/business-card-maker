@@ -7,7 +7,7 @@ import React from 'react';
 const App = ({ authService, dbService, imageUploadService }) => {
   return (
     <div className={styles.App}>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route path={['/', '/login']} exact>
             <LoginForm authService={authService} />
