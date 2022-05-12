@@ -33,35 +33,36 @@ class AuthService {
         break;
       default:
     }
-    if (provider) provider.setCustomParameters({ prompt: 'select_account' });
-    if (providerName === 'guest') {
-      // 익명 로그인
-      return signInAnonymously(this.auth)
+    if (provider) {
+      provider.setCustomParameters({ prompt: 'select_account' });
+      return signInWithPopup(this.auth, provider)
         .then((result) => {
+          // console.log('signInWithPopup then', result);
           return {
             status: 'ok',
             userId: result.user.uid,
-            providerName: 'guest',
+            providerName: providerName,
           };
         })
         .catch((error) => {
-          console.log('익명로그인 에러', error);
+          if (error.code === 'auth/account-exists-with-different-credential') {
+            console.log('이미 가입된 이메일이 있음', error.credential);
+            return { status: 'fail', code: 'account-exists' };
+          }
         });
     }
-    return signInWithPopup(this.auth, provider)
+    // 익명 로그인
+    return signInAnonymously(this.auth)
       .then((result) => {
-        console.log('signInWithPopup then', result);
+        // console.log('signInAnonymously then', result);
         return {
           status: 'ok',
           userId: result.user.uid,
-          providerName: providerName,
+          providerName: 'guest',
         };
       })
       .catch((error) => {
-        if (error.code === 'auth/account-exists-with-different-credential') {
-          console.log('이미 가입된 이메일이 있음', error.credential);
-          return { status: 'fail', code: 'account-exists' };
-        }
+        console.log('익명로그인 에러', error);
       });
   }
 
