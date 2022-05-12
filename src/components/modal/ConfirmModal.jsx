@@ -15,9 +15,11 @@ const ConfirmModal = ({ message, callback }) => {
             <button onClick={handleButtonClick} name='ok'>
               OK
             </button>
-            <button onClick={handleButtonClick} name='cancel'>
-              Cancel
-            </button>
+            {callback ? (
+              <button onClick={handleButtonClick} name='cancel'>
+                Cancel
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
