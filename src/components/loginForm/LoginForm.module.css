@@ -36,7 +36,7 @@
   height: 2rem;
   cursor: pointer;
 }
-.content button:nth-child(4n + 1) {
+.content button:nth-child(3n + 1) {
   border-radius: 25px;
   margin-bottom: 15px;
 }

@@ -1,31 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './LoginForm.module.css';
 import { useHistory } from 'react-router-dom';
+import Modal from '../modal/Modal';
 
 const LoginForm = ({ authService }) => {
   let history = useHistory();
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const goToMain = (userId) => {
+  const goToMain = (userId, providerName) => {
     history.push({
       pathname: '/main',
-      state: userId,
+      state: { userId: userId, providerName: providerName },
     });
   };
 
-  const handleSignIn = (event) => {
-    authService
-      .signIn(event.target.textContent)
-      .then((result) => {
-        console.log('signInWithGoogle.then', result);
-        if (result.user) {
-          const { displayName, email, emailVerified } = result.user;
-          console.log(displayName, email, emailVerified, result.user);
-          if (emailVerified) goToMain(result.user.uid);
-        }
-      })
-      .catch((error) => {
-        console.log('signInWithGoogle.catch', error);
-      });
+  const handleSignIn = async (event) => {
+    const { status, userId, providerName } = await authService.signIn(
+      event.target.name
+    );
+    if (status === 'ok') goToMain(userId, providerName);
+    else setModalVisible(true);
+  };
+  const handleModalCallback = () => {
+    setModalVisible(false);
   };
 
   useEffect(() => {
@@ -39,12 +36,25 @@ const LoginForm = ({ authService }) => {
       <section className={styles.loginForm}>
         <h2 className={styles.title}>Business Card Maker</h2>
         <div className={styles.content}>
-          <h2>Sign In</h2>
-          <button onClick={handleSignIn}>Google</button>
-          <button onClick={handleSignIn}>Github</button>
+          <h2>로그인</h2>
+          <button onClick={handleSignIn} name='google'>
+            Google 로그인
+          </button>
+          <button onClick={handleSignIn} name='github'>
+            Github 로그인
+          </button>
+          <button onClick={handleSignIn} name='guest'>
+            게스트 로그인
+          </button>
         </div>
-        <div className={styles.footer}>Code your dream</div>
+        <div className={styles.footer}>Manage your business cards</div>
       </section>
+      <Modal
+        modalType={'confirm'}
+        visible={modalVisible}
+        message={'해당 이메일 주소는 사용중입니다.'}
+        callback={handleModalCallback}
+      ></Modal>
     </>
   );
 };

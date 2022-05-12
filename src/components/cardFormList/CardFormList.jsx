@@ -140,10 +140,10 @@ const CardFormList = memo(
               onChange={onImageFileChange}
             ></input>
             <button className={styles.btnName} onClick={onBtnClick}>
-              {info.imageUrl ? info.name : 'No Profile Image'}
+              {info.imageUrl ? '프로필사진 변경' : '프로필사진 추가하기'}
             </button>
             <button className={styles.btnDelete} onClick={handleDelete}>
-              Delete
+              삭제
             </button>
           </div>
         </li>

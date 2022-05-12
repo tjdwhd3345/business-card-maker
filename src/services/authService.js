@@ -3,6 +3,7 @@ import {
   getAuth,
   GoogleAuthProvider,
   GithubAuthProvider,
+  signInAnonymously,
   signInWithPopup,
   setPersistence,
   browserSessionPersistence,
@@ -23,17 +24,45 @@ class AuthService {
    */
   signIn(providerName) {
     let provider = null;
-    switch (providerName) {
-      case 'Google':
+    switch (providerName.toLowerCase()) {
+      case 'google':
         provider = new GoogleAuthProvider();
         break;
-      case 'Github':
+      case 'github':
         provider = new GithubAuthProvider();
         break;
       default:
     }
-    provider.setCustomParameters({ prompt: 'select_account' });
-    return signInWithPopup(this.auth, provider);
+    if (provider) provider.setCustomParameters({ prompt: 'select_account' });
+    if (providerName === 'guest') {
+      // 익명 로그인
+      return signInAnonymously(this.auth)
+        .then((result) => {
+          return {
+            status: 'ok',
+            userId: result.user.uid,
+            providerName: 'guest',
+          };
+        })
+        .catch((error) => {
+          console.log('익명로그인 에러', error);
+        });
+    }
+    return signInWithPopup(this.auth, provider)
+      .then((result) => {
+        console.log('signInWithPopup then', result);
+        return {
+          status: 'ok',
+          userId: result.user.uid,
+          providerName: providerName,
+        };
+      })
+      .catch((error) => {
+        if (error.code === 'auth/account-exists-with-different-credential') {
+          console.log('이미 가입된 이메일이 있음', error.credential);
+          return { status: 'fail', code: 'account-exists' };
+        }
+      });
   }
 
   /**

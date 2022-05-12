@@ -14,7 +14,7 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   let history = useHistory();
-  const currentUserUid = history.location.state;
+  const { userId: currentUserUid, providerName } = history.location.state;
 
   useEffect(() => {
     authService.onAuthChanged((user) => {
@@ -52,12 +52,14 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
     dbService
       .get(currentUserUid) //
       .then(async (result) => {
-        setCards(result);
+        // 게스트 사용자는 로그인 시 카드하나 추가
+        if (providerName === 'guest') handleAddCard();
+        else setCards(result);
         setIsLoaded(true);
       });
 
     console.log('effect 2, dbSevice, currentUserUid');
-  }, [dbService, currentUserUid]);
+  }, [dbService, currentUserUid, providerName]);
 
   /**
    * 카드 각 항목의 change 이벤트
@@ -131,6 +133,11 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
       authService.signOut().then(() => {
         history.push('/');
       });
+      // 게스트 사용자는 로그아웃 시 db에서 삭제
+      if (providerName === 'guest') {
+        const refPath = currentUserUid;
+        dbService.remove(refPath);
+      }
     }
     setModalVisible(false);
   };
@@ -142,12 +149,17 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
           <div>
             <h1>Business Card Maker</h1>
           </div>
+          {providerName === 'guest' ? (
+            <div className={styles.guest}>
+              <span>게스트 로그인</span>
+            </div>
+          ) : null}
           <div className={styles.controlBtn}>
             <button className={styles.add} onClick={handleAddCard}>
-              Add Card
+              카드 추가
             </button>
             <button className={styles.signOut} onClick={handleSignOut}>
-              Sign Out
+              로그아웃
             </button>
           </div>
         </div>
@@ -169,7 +181,7 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
             </>
           )}
         </div>
-        <div className={styles.footer}>Code your dream</div>
+        <div className={styles.footer}>Manage your business cards</div>
       </section>
       <Modal
         modalType={'confirm'}
