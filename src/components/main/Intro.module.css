@@ -1,4 +1,4 @@
-@value mainWhite, subWhite, mainBlue, subBlue, mainBlack, mainShadow from '../common/colors.css';
+@value mainWhite, transparentWhite,subWhite,mainBlue,subBlue,mainBlack,mainShadow from '../common/colors.css';
 @value mediaMobile from '../common/size.css';
 
 .loginForm {
@@ -55,7 +55,7 @@
   padding: 5px;
 }
 .signOut:hover {
-  background-color: subBlue;
+  background-color: transparentWhite;
   color: mainBlack;
 }
 
