@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Business Card Maker",
+  "name": "Business Name Card Maker & Viewer App",
   "icons": [
     {
       "src": "favicon.ico",
