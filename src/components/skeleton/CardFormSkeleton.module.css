@@ -1,5 +1,5 @@
-@value mainWhite, subWhite, mainBlack from '../common/colors.css';
-@value mediaMobile from '../common/size.css';
+@value mainWhite, subWhite, mainBlack from '../../common/colors.css';
+@value mediaMobile from '../../common/size.css';
 
 .wrap {
   flex-basis: 50%;

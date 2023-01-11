@@ -1,5 +1,5 @@
-@value mainWhite, transparentWhite,subWhite,mainBlue,subBlue,mainBlack,mainShadow from '../common/colors.css';
-@value mediaMobile from '../common/size.css';
+@value mainWhite, transparentWhite,subWhite,mainBlue,subBlue,mainBlack,mainShadow from '../../common/colors.css';
+@value mediaMobile from '../../common/size.css';
 
 .loginForm {
   width: 80vw;

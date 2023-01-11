@@ -1,5 +1,5 @@
-@value mainWhite, mainBlue, mainBlack from '../common/colors.css';
-@value mediaMobile from '../common/size.css';
+@value mainWhite, mainBlue, mainBlack from '../../common/colors.css';
+@value mediaMobile from '../../common/size.css';
 
 .content {
   padding: 0 50px;

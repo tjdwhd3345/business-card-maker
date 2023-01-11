@@ -1,4 +1,4 @@
-@value mainWhite, subWhite from '../common/colors.css';
+@value mainWhite, subWhite from '../../common/colors.css';
 
 .container {
   flex-basis: 50%;
