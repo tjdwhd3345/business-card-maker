@@ -7,9 +7,11 @@ import CardPreview from '../cardPreview/CardPreview';
 import Modal from '../modal/Modal';
 import CardFormSkeleton from '../skeleton/CardFormSkeleton';
 import CardViewSkeleton from '../skeleton/CardViewSkeleton';
+import { useService } from '../../context/ServiceProvider';
 
-const Intro = ({ authService, dbService, imageUploadService }) => {
-  const dbApp = dbService.dbApp;
+const Intro = () => {
+  const { authService, dbService } = useService();
+  const { dbApp } = dbService;
   const [cards, setCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -170,7 +172,6 @@ const Intro = ({ authService, dbService, imageUploadService }) => {
                 cards={cards}
                 handleChange={handleOnChange}
                 handleRemove={handleRemove}
-                imageUploadService={imageUploadService}
               />
               <CardPreview cards={cards} />
             </>

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styles from './LoginForm.module.css';
 import { useHistory } from 'react-router-dom';
 import Modal from '../modal/Modal';
+import { useService } from '../../context/ServiceProvider';
 
-const LoginForm = ({ authService }) => {
+const LoginForm = () => {
+  const { authService } = useService();
   let history = useHistory();
   const [modalVisible, setModalVisible] = useState(false);
 

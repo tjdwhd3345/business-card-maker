@@ -1,4 +1,4 @@
-import firebase from '../firebaseInit/firebaseInit';
+import firebase from '../firebase';
 import {
   child,
   get,
